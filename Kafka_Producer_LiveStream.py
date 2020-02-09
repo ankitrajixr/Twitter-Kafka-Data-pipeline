@@ -6,13 +6,13 @@ from kafka import KafkaConsumer,KafkaProducer
 from kafka import KafkaConsumer,KafkaProducer 
 import json
 import string
+#OAuth Details from the Twitter developer s Account
+consumer_key = '***************************'
+consumer_secret = '***************************'
+access_token = '********************************'
+access_token_secret = '****************'
 
-consumer_key = 'g1Xt8LsKPTXuGLwxEQlxLfo39'
-consumer_secret = 'V9crbbx1CgOyWnyrne06DFfeSwXLMBzG17SY7GOHq4fhdNp6Yd'
-access_token = '1220847667166810112-fDjAj2PDK5tV2I0btlvXVVjO1QGKx3'
-access_token_secret = 'ztadKDxjoKEg6rbY5YQArHv7pzNQtpO0JMsHHyjEdVw0U'
-
-class StdOutListener(tweepy.StreamListener):  #Override the class
+class StdOutListener(tweepy.StreamListener):  #Override class
     def on_data(self, data):
         #Encoding the data before sending it
         producer.send(my_topic, data.encode('utf-8')) 
@@ -39,6 +39,7 @@ if __name__ == '__main__':
     stream = tweepy.Stream(auth, listener)
     #adding a kafka Topic if not present it will send manually
     producer = KafkaProducer(bootstrap_servers='localhost:9092')
+    #Pizza_1 is the topic created
     my_topic = 'Pizza_1'
     #In this section topic to be streamed is added and language is also selected
-    stream.filter(languages=["en"], track=['pizza', '@pizza'], is_async=True)
+    stream.filter(languages=["en"], track=['pizza', '@pizza'], is_async=True) #is_async is for asynchronous running
